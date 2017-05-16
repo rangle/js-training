@@ -1,0 +1,505 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="search-domain" content="http://rangle.io" />
+    <link href="http://localhost:4000/css/bootstrap.css" rel="stylesheet" />
+    <link href="http://localhost:4000/css/bootstrap-theme.css" rel="stylesheet" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>TypeScript</title>
+  </head>
+  <body>
+    <div class="container shadow">
+      <div class="row-fluid">
+        <div class="span10 offset1">
+          <h1>TypeScript</h1>
+          <hr />
+
+<h2 id="basics">Basics</h2>
+
+<ul>
+  <li>Superset of ES6 with addition of typing and type-checking, interfaces, and decorators</li>
+</ul>
+
+<div class="language-ts highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">add</span><span class="p">(</span><span class="nx">a</span><span class="err">:</span> <span class="kr">number</span><span class="p">,</span> <span class="nx">b</span><span class="err">:</span> <span class="kr">number</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>   <span class="c1">// 4</span>
+<span class="nx">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">'3'</span><span class="p">);</span> <span class="c1">// compiler error before JS is even produced</span>
+
+<span class="kr">class</span> <span class="nx">Pizza</span> <span class="p">{</span>
+  <span class="nl">toppings</span><span class="p">:</span> <span class="kr">string</span><span class="p">[];</span>  <span class="c1">// instance properties must be declared</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="nx">toppings</span><span class="err">:</span> <span class="kr">string</span><span class="p">[])</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">toppings</span> <span class="o">=</span> <span class="nx">toppings</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<hr />
+
+<h2 id="configuration">Configuration</h2>
+
+<ul>
+  <li>Configuration can be on command line but more commonly in <code class="highlighter-rouge">tsconfig.json</code></li>
+  <li><code class="highlighter-rouge">target</code> is the compilation target</li>
+  <li><code class="highlighter-rouge">module</code> is the target module resolution method</li>
+  <li>Decorator support in TypeScript hasn’t been finalized yet but since Angular uses decorators extensively, these need to be set to true</li>
+  <li>Can use with Webpack via <code class="highlighter-rouge">ts-loader</code></li>
+</ul>
+
+<div class="language-js highlighter-rouge"><pre class="highlight"><code><span class="p">{</span>
+ <span class="s2">"compilerOptions"</span><span class="err">:</span> <span class="p">{</span>
+    <span class="s2">"module"</span><span class="err">:</span> <span class="s2">"commonjs"</span><span class="p">,</span>
+    <span class="s2">"target"</span><span class="err">:</span> <span class="s2">"es5"</span><span class="p">,</span>
+    <span class="s2">"emitDecoratorMetadata"</span><span class="err">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="s2">"experimentalDecorators"</span><span class="err">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="s2">"noImplicitAny"</span><span class="err">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="s2">"removeComments"</span><span class="err">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="s2">"sourceMap"</span><span class="err">:</span> <span class="kc">true</span>
+  <span class="p">},</span>
+  <span class="s2">"exclude"</span><span class="err">:</span> <span class="p">[</span>
+    <span class="s2">"node_modules"</span><span class="p">,</span>
+    <span class="s2">"dist/"</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<hr />
+
+<h2 id="typings-and-linting">Typings and Linting</h2>
+
+<h3 id="typings">Typings</h3>
+
+<ul>
+  <li>To use TypeScript with JS libraries a typings file (or set of typings files) needs to exist or be created (typings file are a TypeScript wrapper around a JS library file).  Typically typings have a naming format of <code class="highlighter-rouge">*.d.ts</code></li>
+  <li>Can install many typings via npm via <code class="highlighter-rouge">@types/library-name</code></li>
+</ul>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>npm install --save @types/lodash
+</code></pre>
+</div>
+
+<p>See <a href="https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/lodash">here</a> for example typings for lodash</p>
+
+<h3 id="linting">Linting</h3>
+
+<ul>
+  <li>Use <code class="highlighter-rouge">tslint</code> along with rule configuration in a <code class="highlighter-rouge">tslint.json</code></li>
+  <li>Can use with Webpack via <code class="highlighter-rouge">tslint-loader</code></li>
+</ul>
+
+<hr />
+
+<h2 id="types">Types</h2>
+
+<p>TypeScript supports the standard JavaScript types</p>
+
+<ul>
+  <li><code class="highlighter-rouge">boolean</code> (true/false)</li>
+  <li><code class="highlighter-rouge">number</code> integers, floats, Infinity and NaN</li>
+  <li><code class="highlighter-rouge">string</code> characters and strings of characters</li>
+  <li><code class="highlighter-rouge">[]</code> Arrays of other types, like number[] or boolean[]</li>
+  <li><code class="highlighter-rouge"><span class="p">{}</span></code> Object literal</li>
+  <li><code class="highlighter-rouge">undefined</code> not set</li>
+</ul>
+
+<p>It also adds a few new types</p>
+
+<ul>
+  <li><code class="highlighter-rouge">enum</code> enumerations like { Red, Blue, Green }</li>
+  <li><code class="highlighter-rouge">any</code> use any type</li>
+  <li><code class="highlighter-rouge">void</code> nothing</li>
+</ul>
+
+<hr />
+
+<h2 id="types-1">Types</h2>
+
+<div class="language-ts highlighter-rouge"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">isDone</span><span class="err">:</span> <span class="kr">boolean</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">height</span><span class="err">:</span> <span class="kr">number</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">name</span><span class="err">:</span> <span class="kr">string</span> <span class="o">=</span> <span class="s2">"bob"</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">list</span><span class="err">:</span> <span class="kr">number</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+<span class="kd">let</span> <span class="nx">list</span><span class="err">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="kr">number</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+<span class="kr">enum</span> <span class="nx">Color</span> <span class="p">{</span><span class="nx">Red</span><span class="p">,</span> <span class="nx">Green</span><span class="p">,</span> <span class="nx">Blue</span><span class="p">};</span>
+<span class="kd">let</span> <span class="nx">c</span><span class="err">:</span> <span class="nx">Color</span> <span class="o">=</span> <span class="nx">Color</span><span class="p">.</span><span class="nx">Green</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">notSure</span><span class="err">:</span> <span class="kr">any</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="nx">notSure</span> <span class="o">=</span> <span class="s2">"maybe a string instead"</span><span class="p">;</span>
+<span class="nx">notSure</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span> <span class="c1">// okay, definitely a boolean</span>
+
+<span class="kd">function</span> <span class="nx">showMessage</span><span class="p">(</span><span class="nx">data</span><span class="err">:</span> <span class="kr">string</span><span class="p">)</span><span class="err">:</span> <span class="k">void</span> <span class="p">{</span>
+  <span class="nx">alert</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">showMessage</span><span class="p">(</span><span class="s1">'hello'</span><span class="p">);</span>
+</code></pre>
+</div>
+
+<p>In many JavaScript functions it’s quite common for functions to take optional parameters. TypeScript provides support for this, like so:</p>
+
+<div class="language-ts highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">logMessage</span><span class="p">(</span><span class="nx">message</span><span class="err">:</span> <span class="kr">string</span><span class="p">,</span> <span class="nx">isDebug</span><span class="p">?:</span> <span class="kr">boolean</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">isDebug</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Debug: '</span> <span class="o">+</span> <span class="nx">message</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">message</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="nx">logMessage</span><span class="p">(</span><span class="s1">'hi'</span><span class="p">);</span>         <span class="c1">// 'hi'</span>
+<span class="nx">logMessage</span><span class="p">(</span><span class="s1">'test'</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span> <span class="c1">// 'Debug: test'</span>
+</code></pre>
+</div>
+
+<p>Using a <code class="highlighter-rouge">?</code> lets <code class="highlighter-rouge">tsc</code> know that <code class="highlighter-rouge">isDebug</code> is an optional parameter. <code class="highlighter-rouge">tsc</code> will not complain if isDebug is omitted.</p>
+
+<hr />
+
+<h2 id="classes">Classes</h2>
+
+<ul>
+  <li>Classes become their own types</li>
+  <li>Instance properties should be declared</li>
+  <li>Optional properties can be declared with <code class="highlighter-rouge">?:</code> syntax</li>
+</ul>
+
+<div class="language-ts highlighter-rouge"><pre class="highlight"><code><span class="kr">class</span> <span class="nx">Foo</span> <span class="p">{</span> <span class="nl">foo</span><span class="p">:</span> <span class="kr">number</span><span class="p">;</span> <span class="p">}</span>
+<span class="kr">class</span> <span class="nx">Bar</span> <span class="p">{</span> <span class="nl">bar</span><span class="p">:</span> <span class="kr">string</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="kr">class</span> <span class="nx">Baz</span> <span class="p">{</span>
+  <span class="nl">foo</span><span class="p">:</span> <span class="kr">number</span><span class="p">;</span>
+  <span class="nl">bar</span><span class="p">:</span> <span class="kr">string</span><span class="p">;</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="nx">foo</span><span class="err">:</span> <span class="nx">Foo</span><span class="p">,</span> <span class="nx">bar</span><span class="err">:</span> <span class="nx">Bar</span><span class="p">)</span> <span class="p">{</span> <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">let</span> <span class="nx">baz</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Baz</span><span class="p">(</span><span class="k">new</span> <span class="nx">Foo</span><span class="p">(),</span> <span class="k">new</span> <span class="nx">Bar</span><span class="p">());</span> <span class="c1">// valid</span>
+<span class="nx">baz</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Baz</span><span class="p">(</span><span class="k">new</span> <span class="nx">Bar</span><span class="p">(),</span> <span class="k">new</span> <span class="nx">Foo</span><span class="p">());</span>     <span class="c1">// tsc errors</span>
+
+<span class="kr">class</span> <span class="nx">Person</span> <span class="p">{</span>
+  <span class="nl">name</span><span class="p">:</span> <span class="kr">string</span><span class="p">;</span>
+  <span class="nx">nickName</span><span class="p">?:</span> <span class="kr">string</span><span class="p">;</span>  <span class="c1">// optional property</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<hr />
+
+<h2 id="interfaces-12">Interfaces (1/2)</h2>
+
+<ul>
+  <li>Interfaces define a contract or shape for a function, or object (no implementation, just signatures)</li>
+  <li>No transpiled JS artifact.  It is only used for type-checking by the <code class="highlighter-rouge">tsc</code> transpiler</li>
+  <li>Interfaces can also provide multiple function signatures</li>
+</ul>
+
+<div class="language-ts highlighter-rouge"><pre class="highlight"><code><span class="kr">interface</span> <span class="nx">Callback</span> <span class="p">{</span>
+  <span class="p">(</span><span class="nx">error</span><span class="err">:</span> <span class="nb">Error</span><span class="p">,</span> <span class="nx">data</span><span class="err">:</span> <span class="kr">any</span><span class="p">)</span><span class="err">:</span> <span class="k">void</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kd">function</span> <span class="nx">callServer</span><span class="p">(</span><span class="nx">callback</span><span class="err">:</span> <span class="nx">Callback</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">callback</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="s1">'hi'</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">callServer</span><span class="p">((</span><span class="nx">error</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">));</span>  <span class="c1">// 'hi'</span>
+<span class="nx">callServer</span><span class="p">(</span><span class="s1">'hi'</span><span class="p">);</span>                                <span class="c1">// tsc error</span>
+
+<span class="kr">interface</span> <span class="nx">PrintOutput</span> <span class="p">{</span>
+  <span class="p">(</span><span class="nx">message</span><span class="err">:</span> <span class="kr">string</span><span class="p">)</span><span class="err">:</span> <span class="k">void</span><span class="p">;</span>    <span class="c1">// common case</span>
+  <span class="p">(</span><span class="nx">message</span><span class="err">:</span> <span class="kr">string</span><span class="p">[])</span><span class="err">:</span> <span class="k">void</span><span class="p">;</span>  <span class="c1">// less common case</span>
+<span class="p">}</span>
+<span class="kd">let</span> <span class="nx">printOut</span><span class="err">:</span> <span class="nx">PrintOutput</span> <span class="o">=</span> <span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nb">Array</span><span class="p">.</span><span class="nx">isArray</span><span class="p">(</span><span class="nx">message</span><span class="p">))</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">message</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s1">', '</span><span class="p">));</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">message</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="nx">printOut</span><span class="p">(</span><span class="s1">'hello'</span><span class="p">);</span>       <span class="c1">// 'hello'</span>
+<span class="nx">printOut</span><span class="p">([</span><span class="s1">'hi'</span><span class="p">,</span> <span class="s1">'bye'</span><span class="p">]);</span> <span class="c1">// 'hi, bye'</span>
+</code></pre>
+</div>
+
+<hr />
+
+<h2 id="interfaces-22">Interfaces (2/2)</h2>
+
+<ul>
+  <li>The shape of Interfaces is what is important, so Class instances can be fed to Interface types if they have the same shape (same attributes and/or methods)</li>
+  <li>Classes can implement interfaces with the keyword <code class="highlighter-rouge">implements</code> (though it isn’t absolutely necessary as long as the class shape matches)</li>
+</ul>
+
+<div class="language-ts highlighter-rouge"><pre class="highlight"><code><span class="kr">interface</span> <span class="nx">Action</span> <span class="p">{</span>
+  <span class="nl">type</span><span class="p">:</span> <span class="kr">string</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">let</span> <span class="nx">a</span><span class="err">:</span> <span class="nx">Action</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">type</span><span class="p">:</span> <span class="s1">'literal'</span>
+<span class="p">}</span>
+
+<span class="kr">class</span> <span class="nx">NotAnAction</span> <span class="p">{</span>
+  <span class="nl">type</span><span class="p">:</span> <span class="kr">string</span><span class="p">;</span>
+  <span class="kd">constructor</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="kd">type</span> <span class="o">=</span> <span class="s1">'Constructor function (class)'</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">a</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">NotAnAction</span><span class="p">();</span> <span class="c1">// valid TypeScript!</span>
+</code></pre>
+</div>
+
+<hr />
+
+<h2 id="type-inference">Type Inference</h2>
+
+<ul>
+  <li>Specifying types is optional</li>
+  <li>TypeScript will attempt to infer type if it isn’t specified</li>
+  <li>Type Inference can work through contexts</li>
+</ul>
+
+<div class="language-ts highlighter-rouge"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">11</span><span class="p">];</span>
+<span class="nx">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'this will generate a type error'</span><span class="p">];</span>
+</code></pre>
+</div>
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>tsc ./type-inference-finds-error.ts
+<span class="nb">type</span>-inference-finds-error.ts<span class="o">(</span>2,1<span class="o">)</span>: error TS2322: Type <span class="s1">'string[]'</span> is not assignable to <span class="nb">type</span> <span class="s1">'number[]'</span>.
+  Type <span class="s1">'string'</span> is not assignable to <span class="nb">type</span> <span class="s1">'number'</span>.
+</code></pre>
+</div>
+<div class="language-ts highlighter-rouge"><pre class="highlight"><code><span class="kr">interface</span> <span class="nx">FakeEvent</span> <span class="p">{</span>
+  <span class="nl">type</span><span class="p">:</span> <span class="kr">string</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kr">interface</span> <span class="nx">FakeEventHandler</span> <span class="p">{</span>
+  <span class="p">(</span><span class="nx">e</span><span class="err">:</span> <span class="nx">FakeEvent</span><span class="p">)</span><span class="err">:</span> <span class="k">void</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kr">class</span> <span class="nx">FakeWindow</span> <span class="p">{</span>
+  <span class="nl">onMouseDown</span><span class="p">:</span> <span class="nx">FakeEventHandler</span>
+<span class="p">}</span>
+<span class="kd">const</span> <span class="nx">fakeWindow</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FakeWindow</span><span class="p">();</span>
+
+<span class="nx">fakeWindow</span><span class="p">.</span><span class="nx">onMouseDown</span> <span class="o">=</span> <span class="p">(</span><span class="nx">a</span><span class="err">:</span> <span class="kr">number</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// this will fail</span>
+<span class="p">};</span>
+</code></pre>
+</div>
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>tsc ./type-inference-finds-error-2.ts
+<span class="nb">type</span>-inference-finds-error-2.ts<span class="o">(</span>14,1<span class="o">)</span>: error TS2322: Type <span class="s1">'(a: number) =&gt; void'</span> is not assignable to <span class="nb">type</span> <span class="s1">'FakeEventHandler'</span>.
+  Types of parameters <span class="s1">'a'</span> and <span class="s1">'e'</span> are incompatible.
+    Type <span class="s1">'number'</span> is not assignable to <span class="nb">type</span> <span class="s1">'FakeEvent'</span>.
+      Property <span class="s1">'type'</span> is missing <span class="k">in </span><span class="nb">type</span> <span class="s1">'Number'</span>.
+</code></pre>
+</div>
+
+<hr />
+
+<h2 id="type-keyword-and-union-types">Type keyword, and Union Types</h2>
+
+<ul>
+  <li>The <code class="highlighter-rouge">type</code> keyword defines an alias to a type.  Useful with complex types</li>
+  <li>Union types specify a type should be one of a set</li>
+</ul>
+
+<div class="language-ts highlighter-rouge"><pre class="highlight"><code><span class="kd">type</span> <span class="nx">str</span> <span class="o">=</span> <span class="kr">string</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">cheese</span><span class="err">:</span> <span class="nx">str</span> <span class="o">=</span> <span class="s1">'gorgonzola'</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">cake</span><span class="err">:</span> <span class="nx">str</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span> <span class="c1">// Type 'number' is not assignable to type 'string'</span>
+<span class="kd">function</span> <span class="nx">admitAge</span> <span class="p">(</span><span class="nx">age</span><span class="err">:</span> <span class="kr">number</span><span class="o">|</span><span class="kr">string</span><span class="p">)</span><span class="err">:</span> <span class="kr">string</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="err">`</span><span class="nx">I</span> <span class="nx">am</span> <span class="nx">$</span><span class="p">{</span><span class="nx">age</span><span class="p">},</span> <span class="nx">alright</span><span class="p">?</span><span class="o">!</span><span class="err">`</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">admitAge</span><span class="p">(</span><span class="mi">30</span><span class="p">);</span> <span class="c1">// 'I am 30, alright?!'</span>
+<span class="nx">admitAge</span><span class="p">(</span><span class="s1">'Forty'</span><span class="p">);</span> <span class="c1">// 'I am Forty, alright?!'</span>
+
+<span class="kd">type</span> <span class="nx">Age</span> <span class="o">=</span> <span class="kr">number</span> <span class="o">|</span> <span class="kr">string</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nx">admitAge</span> <span class="p">(</span><span class="nx">age</span><span class="p">:</span> <span class="nx">Age</span><span class="p">)</span><span class="err">:</span> <span class="kr">string</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="err">`</span><span class="nx">I</span> <span class="nx">am</span> <span class="nx">$</span><span class="p">{</span><span class="nx">age</span><span class="p">},</span> <span class="nx">alright</span><span class="p">?</span><span class="o">!</span><span class="err">`</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kd">let</span> <span class="nx">myAge</span><span class="p">:</span> <span class="nx">Age</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">yourAge</span><span class="err">:</span> <span class="nx">Age</span> <span class="o">=</span> <span class="s1">'One Hundred'</span><span class="p">;</span>
+<span class="nx">admitAge</span><span class="p">(</span><span class="nx">yourAge</span><span class="p">);</span> <span class="c1">// 'I am One Hundred, alright?!'</span>
+
+<span class="kd">type</span> <span class="nx">PartyZone</span> <span class="o">=</span> <span class="s2">"pizza hut"</span> <span class="o">|</span> <span class="s2">"waterpark"</span> <span class="o">|</span> <span class="s2">"bowling alley"</span> <span class="o">|</span> <span class="s2">"abandoned warehouse"</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nx">goToParty</span> <span class="p">(</span><span class="nx">place</span><span class="err">:</span> <span class="nx">PartyZone</span><span class="p">)</span><span class="err">:</span> <span class="kr">string</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="err">`</span><span class="nx">lets</span> <span class="nx">go</span> <span class="nx">to</span> <span class="nx">the</span> <span class="nx">$</span><span class="p">{</span><span class="nx">place</span><span class="p">}</span><span class="err">`</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">goToParty</span><span class="p">(</span><span class="s2">"pizza hut"</span><span class="p">);</span>
+<span class="nx">goToParty</span><span class="p">(</span><span class="s2">"chuck e. cheese"</span><span class="p">);</span> <span class="c1">// Argument of type `"chuck e. cheese"' is not assignable to parameter of type 'PartyZone'</span>
+</code></pre>
+</div>
+
+<hr />
+
+<h2 id="intersection-types">Intersection Types</h2>
+
+<ul>
+  <li>Intersection types are the combination of two or more types. Useful for objects and params that need to implement more than one interface.</li>
+</ul>
+
+<div class="language-ts highlighter-rouge"><pre class="highlight"><code><span class="kr">interface</span> <span class="nx">Kicker</span> <span class="p">{</span>
+  <span class="nx">kick</span><span class="p">(</span><span class="nx">speed</span><span class="err">:</span> <span class="kr">number</span><span class="p">)</span><span class="err">:</span> <span class="kr">number</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kr">interface</span> <span class="nx">Puncher</span> <span class="p">{</span>
+  <span class="nx">punch</span><span class="p">(</span><span class="nx">power</span><span class="err">:</span> <span class="kr">number</span><span class="p">)</span><span class="err">:</span> <span class="kr">number</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">// assign intersection type definition to alias KickPuncher</span>
+<span class="kd">type</span> <span class="nx">KickPuncher</span> <span class="o">=</span> <span class="nx">Kicker</span> <span class="o">&amp;</span> <span class="nx">Puncher</span><span class="p">;</span>
+
+<span class="kd">function</span> <span class="nx">attack</span> <span class="p">(</span><span class="nx">warrior</span><span class="err">:</span> <span class="nx">KickPuncher</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">warrior</span><span class="p">.</span><span class="nx">kick</span><span class="p">(</span><span class="mi">102</span><span class="p">);</span>
+  <span class="nx">warrior</span><span class="p">.</span><span class="nx">punch</span><span class="p">(</span><span class="mi">412</span><span class="p">);</span>
+  <span class="nx">warrior</span><span class="p">.</span><span class="nx">judoChop</span><span class="p">();</span> <span class="c1">// Property 'judoChop' does not exist on type 'KickPuncher'</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<hr />
+
+<h2 id="function-type-definitions">Function Type Definitions</h2>
+
+<ul>
+  <li>Function type annotations can get much more specific than typescripts built-in Function type. Function type definitions allow you to attach a function signature to it’s own type.</li>
+  <li>The syntax is similar to ES6 fat-arrow functions. <code class="highlighter-rouge">([params]) =&gt; [return type]</code></li>
+</ul>
+
+<div class="language-ts highlighter-rouge"><pre class="highlight"><code><span class="kd">type</span> <span class="nx">MaybeError</span> <span class="o">=</span> <span class="nb">Error</span> <span class="o">|</span> <span class="kc">null</span><span class="p">;</span>
+<span class="kd">type</span> <span class="nx">Callback</span> <span class="o">=</span> <span class="p">(</span><span class="nx">err</span><span class="err">:</span> <span class="nx">MaybeError</span><span class="p">,</span> <span class="nx">response</span><span class="err">:</span> <span class="nb">Object</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">void</span><span class="p">;</span>
+
+<span class="kd">function</span> <span class="nx">sendRequest</span> <span class="p">(</span><span class="nx">cb</span><span class="err">:</span> <span class="nx">Callback</span><span class="p">)</span><span class="err">:</span> <span class="k">void</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">cb</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">cb</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="p">{});</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<ul>
+  <li>To see how the <code class="highlighter-rouge">type</code> keyword definitions above simplify code, below is how it would look without</li>
+</ul>
+
+<div class="language-ts highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">sendRequest</span> <span class="p">(</span><span class="nx">cb</span><span class="err">:</span> <span class="p">(</span><span class="nx">err</span><span class="err">:</span> <span class="nb">Error</span><span class="o">|</span><span class="kc">null</span><span class="p">,</span> <span class="nx">response</span><span class="err">:</span> <span class="nb">Object</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">void</span><span class="p">)</span><span class="err">:</span> <span class="k">void</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">cb</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">cb</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="p">{});</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<hr />
+
+<h2 id="decorators">Decorators</h2>
+
+<ul>
+  <li>Decorators are proposed for a future version of ECMAScript but are an experimental feature of TypeScript</li>
+  <li>They are functions with a prefixed <code class="highlighter-rouge">@</code> symbol and immediately followed by a Class, parameter, method, or property</li>
+  <li>Decorator acts on target (following Class, parameter, method, or property) and replaces with modified form.  It is called at runtime</li>
+  <li>Decorator can be simple (function returning value) or factories (function returning function)</li>
+</ul>
+
+<div class="language-ts highlighter-rouge"><pre class="highlight"><code><span class="c1">// simple, used as @sealed</span>
+<span class="kd">function</span> <span class="nx">sealed</span><span class="p">(</span><span class="nx">target</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// do something with 'target' ...</span>
+<span class="p">}</span>
+<span class="c1">// factory used as @color(value: string)</span>
+<span class="kd">function</span> <span class="nx">color</span><span class="p">(</span><span class="nx">value</span><span class="err">:</span> <span class="kr">string</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// this is the decorator factory</span>
+    <span class="k">return</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">target</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// this is the decorator</span>
+        <span class="c1">// do something with 'target' using 'value'...</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<hr />
+
+<h2 id="property-decorator-examples">Property Decorator Examples</h2>
+
+<ul>
+  <li>A factory and a simple decorator example below</li>
+</ul>
+
+<div class="language-ts highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">Override</span><span class="p">(</span><span class="nx">label</span><span class="err">:</span> <span class="kr">string</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">target</span><span class="err">:</span> <span class="kr">any</span><span class="p">,</span> <span class="nx">key</span><span class="err">:</span> <span class="kr">string</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">key</span><span class="p">,</span> <span class="p">{</span>
+      <span class="na">configurable</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+      <span class="na">get</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">label</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="kr">class</span> <span class="nx">Test</span> <span class="p">{</span>
+  <span class="err">@</span><span class="nx">Override</span><span class="p">(</span><span class="s1">'test'</span><span class="p">)</span>      <span class="c1">// invokes Override, which returns the decorator</span>
+  <span class="nl">name</span><span class="p">:</span> <span class="kr">string</span> <span class="o">=</span> <span class="s1">'pat'</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kd">let</span> <span class="nx">t</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Test</span><span class="p">();</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">t</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>  <span class="c1">// 'test'</span>
+
+<span class="kd">function</span> <span class="nx">ReadOnly</span><span class="p">(</span><span class="nx">target</span><span class="err">:</span> <span class="kr">any</span><span class="p">,</span> <span class="nx">key</span><span class="err">:</span> <span class="kr">string</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">key</span><span class="p">,</span> <span class="p">{</span> <span class="na">writable</span><span class="p">:</span> <span class="kc">false</span> <span class="p">});</span>
+<span class="p">}</span>
+<span class="kr">class</span> <span class="nx">Test</span> <span class="p">{</span>
+  <span class="err">@</span><span class="nx">ReadOnly</span>             <span class="c1">// notice there are no `()`</span>
+  <span class="nl">name</span><span class="p">:</span> <span class="kr">string</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kd">const</span> <span class="nx">t</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Test</span><span class="p">();</span>
+<span class="nx">t</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s1">'jan'</span><span class="p">;</span>         
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">t</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// 'undefined'</span>
+</code></pre>
+</div>
+
+<hr />
+
+<h2 id="class-decorator-example">Class Decorator Example</h2>
+
+<ul>
+  <li>The decorator function takes a class as an argument. The decorator function then returns a new class construction function that is used whenever the decorated class is instantiated.</li>
+  <li>This decorator does nothing other than log out its given parameter, and its target’s class name to the console.</li>
+</ul>
+
+<div class="language-ts highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">log</span><span class="p">(</span><span class="nx">prefix</span><span class="p">?:</span> <span class="kr">string</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">(</span><span class="nx">target</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">original</span> <span class="o">=</span> <span class="nx">target</span><span class="p">;</span> <span class="c1">// save a reference to the original constructor</span>
+    <span class="c1">// a utility function to generate instances of a class</span>
+    <span class="kd">function</span> <span class="nx">construct</span><span class="p">(</span><span class="kd">constructor</span><span class="p">,</span> <span class="nx">args</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="na">c</span><span class="p">:</span> <span class="kr">any</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="kd">constructor</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">args</span><span class="p">);</span>
+      <span class="p">}</span>
+      <span class="nx">c</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="kd">constructor</span><span class="p">.</span><span class="nx">prototype</span><span class="p">;</span>
+      <span class="k">return</span> <span class="k">new</span> <span class="nx">c</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="c1">// the new constructor behavior</span>
+    <span class="kd">var</span> <span class="na">f</span><span class="p">:</span> <span class="kr">any</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(...</span><span class="nx">args</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">prefix</span> <span class="o">+</span> <span class="nx">original</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>
+      <span class="k">return</span> <span class="nx">construct</span><span class="p">(</span><span class="nx">original</span><span class="p">,</span> <span class="nx">args</span><span class="p">);</span>
+    <span class="p">}</span>  
+    <span class="nx">f</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="nx">original</span><span class="p">.</span><span class="nx">prototype</span><span class="p">;</span> <span class="c1">// copy prototype so instanceof operator still works</span>
+    <span class="k">return</span> <span class="nx">f</span><span class="p">;</span> <span class="c1">// return new constructor (will override original)</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="err">@</span><span class="nx">log</span><span class="p">(</span><span class="s1">'hello'</span><span class="p">)</span>
+<span class="kr">class</span> <span class="nx">World</span> <span class="p">{}</span>
+<span class="kd">const</span> <span class="nx">w</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">World</span><span class="p">();</span> <span class="c1">// outputs "helloWorld"</span>
+</code></pre>
+</div>
+
+<hr />
+
+<h2 id="parameter-decorator-example">Parameter Decorator Example</h2>
+
+<ul>
+  <li>Example demonstrating method parameter decoration</li>
+</ul>
+
+<div class="language-ts highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">logPosition</span><span class="p">(</span><span class="nx">target</span><span class="err">:</span> <span class="kr">any</span><span class="p">,</span> <span class="nx">propertyKey</span><span class="err">:</span> <span class="kr">string</span><span class="p">,</span> <span class="nx">parameterIndex</span><span class="err">:</span> <span class="kr">number</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">parameterIndex</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kr">class</span> <span class="nx">Cow</span> <span class="p">{</span>
+  <span class="nx">say</span><span class="p">(</span><span class="nx">b</span><span class="err">:</span> <span class="kr">string</span><span class="p">,</span> <span class="err">@</span><span class="nx">logPosition</span> <span class="nx">c</span><span class="err">:</span> <span class="kr">boolean</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">b</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">new</span> <span class="nx">Cow</span><span class="p">().</span><span class="nx">say</span><span class="p">(</span><span class="s1">'hello'</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span> <span class="c1">// outputs 1 (newline) hello</span>
+</code></pre>
+</div>
+
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

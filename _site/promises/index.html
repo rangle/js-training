@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="search-domain" content="http://rangle.io" />
+    <link href="http://localhost:4000/css/bootstrap.css" rel="stylesheet" />
+    <link href="http://localhost:4000/css/bootstrap-theme.css" rel="stylesheet" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Promises</title>
+  </head>
+  <body>
+    <div class="container shadow">
+      <div class="row-fluid">
+        <div class="span10 offset1">
+          <h1>Promises</h1>
+          <hr />
+
+<h2 id="promises">Promises</h2>
+
+<ul>
+  <li>ES6 introduces a new object for asynchronous computations.  A <code class="highlighter-rouge">Promise</code> represents a value which may be available now, in the future, or never.  See <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">here</a> for in depth description</li>
+  <li>The constructor takes a function which takes two functions (<code class="highlighter-rouge">resolve</code> and <code class="highlighter-rouge">reject</code>) to be called asynchronously when the <code class="highlighter-rouge">Promise</code> completes or fails</li>
+  <li>You can chain promises with the <code class="highlighter-rouge">Promise.prototype.then(onFulfilled, onRejected)</code> method or catch only failures with <code class="highlighter-rouge">Promise.prototype.catch(onRejected)</code></li>
+</ul>
+
+<div class="language-js highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">msgAfterTimeout</span> <span class="p">(</span><span class="nx">msg</span><span class="p">,</span> <span class="nx">who</span><span class="p">,</span> <span class="nx">timeout</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nx">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="nx">setTimeout</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nx">resolve</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">msg</span><span class="p">}</span> <span class="nx">Hello</span> <span class="nx">$</span><span class="p">{</span><span class="nx">who</span><span class="p">}</span><span class="o">!</span><span class="err">`</span><span class="p">),</span> <span class="nx">timeout</span><span class="p">)</span>
+    <span class="p">})</span>
+<span class="p">}</span>
+<span class="nx">msgAfterTimeout</span><span class="p">(</span><span class="s2">""</span><span class="p">,</span> <span class="s2">"Foo"</span><span class="p">,</span> <span class="mi">100</span><span class="p">).</span><span class="nx">then</span><span class="p">((</span><span class="nx">msg</span><span class="p">)</span> <span class="o">=&gt;</span>
+    <span class="nx">msgAfterTimeout</span><span class="p">(</span><span class="nx">msg</span><span class="p">,</span> <span class="s2">"Bar"</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<span class="p">).</span><span class="nx">then</span><span class="p">((</span><span class="nx">msg</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="err">`</span><span class="nx">done</span> <span class="nx">after</span> <span class="mi">300</span><span class="na">ms</span><span class="p">:</span><span class="nx">$</span><span class="p">{</span><span class="nx">msg</span><span class="p">}</span><span class="err">`</span><span class="p">)</span>
+<span class="p">})</span>
+</code></pre>
+</div>
+
+<hr />
+
+<h2 id="promises-1">Promises</h2>
+
+<ul>
+  <li>You can create a promise that resolves when a set of Promises all resolve (via the static <code class="highlighter-rouge">Promise.all(iterable)</code>) or when the first of a set of Promises resolve (via the static <code class="highlighter-rouge">Promise.race(iterable)</code>)</li>
+</ul>
+
+<div class="language-js highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">fetchAsync</span> <span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">timeout</span><span class="p">,</span> <span class="nx">onData</span><span class="p">,</span> <span class="nx">onError</span><span class="p">)</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>
+<span class="kd">let</span> <span class="nx">fetchPromised</span> <span class="o">=</span> <span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">timeout</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nx">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="nx">fetchAsync</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">timeout</span><span class="p">,</span> <span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">})</span>
+<span class="p">}</span>
+<span class="nx">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">([</span>
+    <span class="nx">fetchPromised</span><span class="p">(</span><span class="s2">"http://backend/foo.txt"</span><span class="p">,</span> <span class="mi">500</span><span class="p">),</span>
+    <span class="nx">fetchPromised</span><span class="p">(</span><span class="s2">"http://backend/bar.txt"</span><span class="p">,</span> <span class="mi">500</span><span class="p">),</span>
+    <span class="nx">fetchPromised</span><span class="p">(</span><span class="s2">"http://backend/baz.txt"</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+<span class="p">]).</span><span class="nx">then</span><span class="p">((</span><span class="nx">data</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="p">[</span> <span class="nx">foo</span><span class="p">,</span> <span class="nx">bar</span><span class="p">,</span> <span class="nx">baz</span> <span class="p">]</span> <span class="o">=</span> <span class="nx">data</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="err">`</span><span class="na">success</span><span class="p">:</span> <span class="nx">foo</span><span class="o">=</span><span class="nx">$</span><span class="p">{</span><span class="nx">foo</span><span class="p">}</span> <span class="nx">bar</span><span class="o">=</span><span class="nx">$</span><span class="p">{</span><span class="nx">bar</span><span class="p">}</span> <span class="nx">baz</span><span class="o">=</span><span class="nx">$</span><span class="p">{</span><span class="nx">baz</span><span class="p">}</span><span class="err">`</span><span class="p">)</span>
+<span class="p">},</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="err">`</span><span class="na">error</span><span class="p">:</span> <span class="nx">$</span><span class="p">{</span><span class="nx">err</span><span class="p">}</span><span class="err">`</span><span class="p">)</span>
+<span class="p">})</span>
+<span class="nx">Promise</span><span class="p">.</span><span class="nx">race</span><span class="p">([</span>
+    <span class="nx">fetchPromised</span><span class="p">(</span><span class="s2">"http://backend/foo.txt"</span><span class="p">,</span> <span class="mi">500</span><span class="p">),</span>
+    <span class="nx">fetchPromised</span><span class="p">(</span><span class="s2">"http://backend/bar.txt"</span><span class="p">,</span> <span class="mi">500</span><span class="p">),</span>
+    <span class="nx">fetchPromised</span><span class="p">(</span><span class="s2">"http://backend/baz.txt"</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+<span class="p">]).</span><span class="nx">then</span><span class="p">((</span><span class="nx">data</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="err">`</span><span class="nx">fastest</span> <span class="na">is</span><span class="p">:</span> <span class="nx">$</span><span class="p">{</span><span class="nx">data</span><span class="p">}</span><span class="err">`</span><span class="p">)</span>
+<span class="p">},</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="err">`</span><span class="na">error</span><span class="p">:</span> <span class="nx">$</span><span class="p">{</span><span class="nx">err</span><span class="p">}</span><span class="err">`</span><span class="p">)</span>
+<span class="p">})</span>
+</code></pre>
+</div>
+
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
