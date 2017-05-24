@@ -6,6 +6,15 @@ permalink: /ts/
 
 ---
 
+## Installation
+
+FIXME: 
+- What packages are required to use typescript?
+- Show a simple typescript file, before going into interfaces / decorators
+- Show how to run TSC from the terminal and how the output looks?
+- Show how to run it in watch mode?
+---
+
 ## Basics
 
 - Superset of ES6 with addition of typing and type-checking, interfaces, and decorators
@@ -67,7 +76,8 @@ class Pizza {
 npm install --save @types/lodash
 ```
 
-See [here](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/lodash) for example typings for lodash
+See [here](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/lodash) for example typings for lodash
+
 
 ### Linting
 
@@ -114,6 +124,10 @@ function showMessage(data: string): void {
 }
 showMessage('hello');
 ```
+
+---
+
+## Optional Parameters
 
 In many JavaScript functions it's quite common for functions to take optional parameters. TypeScript provides support for this, like so:
 
@@ -260,7 +274,7 @@ type-inference-finds-error-2.ts(14,1): error TS2322: Type '(a: number) => void' 
 
 ---
 
-## Type keyword, and Union Types
+## `Type` keyword, and Union Types
 
 - The `type` keyword defines an alias to a type.  Useful with complex types
 - Union types specify a type should be one of a set

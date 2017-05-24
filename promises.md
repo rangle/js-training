@@ -4,6 +4,13 @@ title: "Promises"
 permalink: /promises/
 ---
 
+## Callbacks
+
+FIXME: 
+
+- Start with callbacks before going into promises. Explain what the 'Pyramid of Doom' is when working with callbacks.
+- Explain how promises solve this. 
+
 ---
 
 ## Promises
@@ -12,9 +19,17 @@ permalink: /promises/
 - The constructor takes a function which takes two functions (`resolve` and `reject`) to be called asynchronously when the `Promise` completes or fails
 - You can chain promises with the `Promise.prototype.then(onFulfilled, onRejected)` method or catch only failures with `Promise.prototype.catch(onRejected)`
 
+FIXME This looks confusing. I think we should suggest to just use `Promise.resolve(...)then`. Also the below example should be simplified. Probably best to start with 
+```js 
+var promise = $http.get('http://localhost:3000/api/products');
+promise.then((response) => {
+    //...
+}); 
+```
+
 ```js
 function msgAfterTimeout (msg, who, timeout) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => { 
         setTimeout(() => resolve(`${msg} Hello ${who}!`), timeout)
     })
 }
@@ -24,6 +39,47 @@ msgAfterTimeout("", "Foo", 100).then((msg) =>
     console.log(`done after 300ms:${msg}`)
 })
 ```
+
+---
+ 
+## Chaining Promises 1/2
+
+FIXME:
+
+- Show how we can chain promises using `then`
+- Explain why this is bad
+
+```js
+  .then(function(x){     
+     //...
+  })
+  .then(function (y) {
+     //...
+  })
+```
+---
+
+## Chaining Promises 2/2
+
+FIXME Expand previous section and show how this can be rewritten by creating different function
+
+---
+
+## Error Handling
+
+FIXME: Explain how errors are handled within promises
+
+---
+
+## Promise Statuses
+
+FIXME: Explain what statuses are available within a promise. 
+
+---
+
+## Caching Promise Result
+
+FIXME: Explain how we can cache the result of promises
 
 ---
 
