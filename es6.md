@@ -3,9 +3,14 @@ layout: lesson
 title: "ES6"
 permalink: /es6/
 ---
+<!-- .slide: id="es6" -->
+<!-- .slide: id="es6-what-is-ecmascript -->
+## What is ES5? ES6? ES WHAT?
+
+FIXME: Mention a few lines what ES5, ES6 is. Whats to come next?
 
 ---
-
+<!-- .slide: id="es6-classes -->
 ## Classes
 
 - Makes ES5 prototypical inheritance model function more like a traditional class-based language
@@ -45,6 +50,7 @@ console.log(burger.toppings);             // calls the getter and returns toping
 ```
 
 ---
+<!-- .slide: id="es6-this -->
 ## `this`
 
 - When called using dot notation an object's method's `this` will be the object, in other cases `this` won't be the object (unless bound)
@@ -66,15 +72,17 @@ const toppings = new Toppings();
 let lostThis = toppings.list;
 lostThis() // not gonna work
 ```
-- You can use call, bind or supply to pass `this` to change the context.
+- You can use `call`, `bind` or `supply` to pass `this` to change the context.
 
 ```js
 let foundThis = toppings.list.bind(toppings);
 foundThis() // this will work
 ```
 
----
+- But there is a better way in ES6
 
+---
+<!-- .slide: id="es6-arrow-functions-1 -->
 ## Arrow Functions (1/2)
 
 - Arrow functions do not set a local copy of `this`, `arguments`, `super`, or `new.target`. When any of those are used inside an arrow function JavaScript uses them from the outer scope.
@@ -106,17 +114,21 @@ class Toppings {
 ```
 
 ---
-
+<!-- .slide: id="es6-classes-2 -->
 ## Arrow Functions (2/2)
+
+- ES5
 
 ```js
 items.forEach(function(x) {
-  console.log(x);
   incrementedItems.push(x+1);
 });
+```
 
+- ES6 
+
+```
 items.forEach((x) => {
-  console.log(x);
   incrementedItems.push(x+1);
 });
 
@@ -128,6 +140,8 @@ incrementedItems = items.map(x => x+1);   // when a single param can remove para
 ---
 
 ## Template Strings
+<!-- .slide: id="es6-template-strings -->
+- ES6 introduces a new type of string literal that is marked with back ticks (`). These string literals can include newlines, and there is a string interpolation for inserting variables into strings
 
 ```js
 let name = 'Sam';
@@ -137,13 +151,13 @@ console.log('hello my name is ' + name + ' I am ' + age + ' years old');
 console.log(`hello my name is ${name}, and I am ${age} years old`); // Template String
 ```
 
-- ES6 introduces a new type of string literal that is marked with back ticks (`). These string literals can include newlines, and there is a string interpolation for inserting variables into strings
+FIXME: Show multilines with back ticks. 
 
 ---
-
+<!-- .slide: id="es6-inheritance-1 -->
 ## Inheritance (1/2)
 
-- The class constructor is called when an object is created using the new operator, it will be called before the object is fully created. A consturctor is used to pass in arguments to initialize the newly created object.
+- The class constructor is called when an object is created using the new operator, it will be called before the object is fully created. A constructor is used to pass in arguments to initialize the newly created object.
 - The order of object creation starts from its base class and then moves down to any subclass(es).
 
 ```js
@@ -173,7 +187,7 @@ penguin.swim(); //swim!
 ```
 
 ---
-
+<!-- .slide: id="es6-inheritance-2 -->
 ## Inheritance (2/2)
 
 - Prototypal inheritance was done before class was introduced to JavaScript.  Below is the previous example in prototypal format
@@ -208,8 +222,10 @@ penguin.swim(); // swim!
 ```
 
 ---
-
+<!-- .slide: id="es6-const-and-let -->
 ## `const` and `let`
+
+FIXME: Mention a few words about `const` and `let`
 
 ```js
 var i;
@@ -246,8 +262,10 @@ person = null;          // "TypeError: Assignment to constant variable.
 ---
 
 ## Spread syntax and Rest parameters (`...`)
-
+<!-- .slide: id="es6-spread-syntax -->
 ### Spread syntax
+
+FIXME: Mention a few words about `spread`
 
 ```js
 const add = (a, b) => a + b;
@@ -261,7 +279,10 @@ let mapABC  = { a: 5, b: 6, c: 3};
 let mapABCD = { ...mapABC, d: 7};  // { a: 5, b: 6, c: 3, d: 7 }
 ```
 
+<!-- .slide: id="es6-rest -->
 ### Rest parameters
+
+FIXME: Mention a few words about `spread`
 
 ```js
 function add(...numbers) {
@@ -279,8 +300,10 @@ print(1, 2, 3, 4, 5); // 4, 1
 ```
 
 ---
-
+<!-- .slide: id="es6-destructering -->
 ## Destructuring
+
+FIXME: Mention a few words about `Destructuring`
 
 ```js
 let foo = ['one', 'two', 'three'];
@@ -309,8 +332,10 @@ sayName(john) // -> Helo John Smith Doe
 ```
 
 ---
+<!-- .slide: id="es6-modules -->
+## ES6 Modules
 
-## Modules
+FIXME: Mention a few words about ES6 modules
 
 ```js
 //  lib/math.js
@@ -334,3 +359,7 @@ export default (x) => Math.exp(x)
 import exp, { pi, e } from "lib/mathplusplus"
 console.log("e^{π} = " + exp(pi))
 ```
+
+## Node.js Modules
+
+FIXME: Show how Node.js modules are different

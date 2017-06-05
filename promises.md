@@ -4,7 +4,8 @@ title: "Promises"
 permalink: /promises/
 ---
 
-## Sequencing Code Using Callbacks
+
+## Trying to sequence code using callbacks
 
 Example: Online scheduling platform for booking transit tickets
 
@@ -34,7 +35,7 @@ get(`${baseUrl}/schedule`, trips => {
 
 ---
 
-## Sequencing Code Using Callbacks
+## Trying to sequence code using callbacks
 
 - Code forms a pyramid shape, sometimes referred to as the "Pyramid of Doom"
 - Difficult to read and understand, scales poorly with complexity
@@ -48,15 +49,15 @@ get(`${baseUrl}/schedule`, trips => {
 
 - A `Promise` represents a value which may be available now, in the future, or never
 - Was introduced as a part of the ES2015 spec
-- Are _asynchronous_ and _eager_, meaning the promise will be queued up to run as soon as the promise is created
+- Are _asynchronous_ and _eager_, meaning the promise will be queue'd up to run as soon as the promise is created
 
 ---
 
-## How Are Promises Created?
+## How are promises created?
 
 - Promises are created using the `Promise` constructor
-- The constructor takes a function, which is given `resolve` and `reject` functions
-- `resolve` and `reject` determine whether or not the promise completed successfully or hit an error
+- The constructor takes a function, which gets _resolve_ and _reject_ functions passed to it
+- resolve and reject determine whether or not the promise completed successfully or ran into an error
 
 ```js
 function greetLater(msg, who, timeout) {
@@ -68,18 +69,18 @@ function greetLater(msg, who, timeout) {
 
 ---
 
-## Promise States
+## Promise states
 
 - Promises are always in one of three states:
-    - _fulfilled_: the promise has completed running successfully
-    - _rejected_: the promise has failed to complete
-    - _pending_: the promise has yet to be fulfilled or rejected
+    - __fulfilled__, the promise has completed running successfully
+    - __rejected__, the promise has failed to complete
+    - __pending__, the promise has yet to be fulfilled or rejected
 
 ---
 
 ## Sequencing Code With Promises
 
-- Code can be sequenced using a promise's `then` operator
+- code can be sequenced using a promise's `then` operator
 - `then` accepts a function with the result of the source promise, and returns either:
     - a new value to pass down the promise chain
     - another promise that needs to be fulfilled or rejected before moving the chain forward
@@ -104,9 +105,9 @@ greetLater('', 'Foo', 100)
 
 ## Handling Errors
 
-- Errors are handled using a promise's `catch` operator
-- Accepts a function with the value that as `rejected` or the error thrown
-- Breaks the chain
+- errors are handled using a promise's `catch` operator
+- accepts a function with the value that as `rejected` or the error thrown
+- breaks the chain
 
 ```js
 new Promise((resolve, reject) => {
@@ -137,10 +138,9 @@ new Promise((resolve, reject) => {
 
 ## Things to Avoid
 
-- Avoid nesting promises within each other
+1. Avoid nesting promises within each other
 
-**Don't**
-
+#### Don't
 ```js
 new Promise((resolve, reject) => {
     // do first thing here
@@ -153,8 +153,7 @@ new Promise((resolve, reject) => {
 });
 ```
 
-**Do**
-
+#### Do
 ```js
 new Promise((resolve, reject) => {
     // do first thing here
@@ -171,9 +170,9 @@ new Promise((resolve, reject) => {
 
 ## Things to Avoid
 
-- Don't chain promises that don't rely on each other
+### 2. Chaining promises that don't rely on each other
 
-**Don't**
+#### Don't
 
 ```js
 doThing1()
@@ -181,7 +180,7 @@ doThing1()
     .then(doLastThing);
 ```
 
-**Do**
+#### Do
 
 ```js
 Promise.all([ doThing1(), doThing2() ])
